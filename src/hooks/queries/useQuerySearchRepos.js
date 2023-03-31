@@ -1,5 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import Github from "services/api/github";
+import gitHubQueryKeys from './queryKeys';
+
 
 const searchRepos = (query) => async () => {
   const response = await Github.searchRepositories(query);
@@ -8,7 +10,7 @@ const searchRepos = (query) => async () => {
 
 const useQuerySearchRepos = ({ query = "" }) =>
   useQuery({
-    queryKey: ["github", "repos", query],
+    queryKey: gitHubQueryKeys.repos(query),
     queryFn: searchRepos(query),
     enabled: !!query,
   });
