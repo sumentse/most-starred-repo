@@ -11,6 +11,8 @@ const Test = () => {
     query: `q=stars:>1 pushed:>=${twentyFourHoursAgo}&sort=stars&order=desc&per_page=100`,
   });
 
+  console.log({data, isLoading});
+
 
   return <div />;
 };
