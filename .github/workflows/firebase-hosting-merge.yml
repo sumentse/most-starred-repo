@@ -11,12 +11,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Setup code
-        run: npm ci
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+          with:
+            node-version: 18
+      - name: Install packages
+        run: yarn install --frozen-lockfile
       - name: Build App
-        run: npm run build  
+        run: yarn build  
       - name: Run Tests
-        run: npm test
+        run: yarn test
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
