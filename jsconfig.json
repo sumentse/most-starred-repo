@@ -5,6 +5,7 @@
       "@/*": ["./*"],
       "@hooks": ["./hooks/*"],
       "@components": ["./components/*"],
+      "@containers": ["./containers/*"],
       "@services": ["./services/*"],
       "@utils": ["./utils/*"]
     }
