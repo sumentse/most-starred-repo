@@ -1,13 +1,31 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { CssBaseline } from "@mui/material";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+import CombineProviders from "@utils/CombineProviders";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const theme = createTheme({});
+const queryClient = new QueryClient();
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+const providers = [
+  <QueryClientProvider client={queryClient} />,
+  <ThemeProvider theme={theme} />,
+];
+
 root.render(
   <React.StrictMode>
-    <App />
+    <CombineProviders providers={providers}>
+      <CssBaseline />
+      <App />
+      <ReactQueryDevtools initialIsOpen={false} />
+    </CombineProviders>
   </React.StrictMode>
 );
 
