@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import {
   Card,
   CardContent,
@@ -14,19 +15,31 @@ import {
   Link,
   ClickAwayListener,
 } from "@mui/material";
-import {styled} from '@mui/material/styles';
+import { styled } from "@mui/material/styles";
 import { useState, useRef } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { blue } from "@mui/material/colors";
+import StatsInfo from "@components/StatsInfo";
 
-const StyledLink = styled(Link)(()=>{
-  return {
-    color: 'black',
-    textDecoration: 'none'
-  }
-})
+const Styled = {
+  ProfileBackground: styled(Box)(() => {
+    return {
+      background: blue[300],
+      height: 100,
+      width: "100%",
+    };
+  }),
+};
 
-const RepoCard = ({ name, starCount, description, owner, menuItems }) => {
+const RepoCard = ({
+  name,
+  watcherCount,
+  forkCount,
+  starCount,
+  description,
+  owner,
+  menuItems,
+}) => {
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
 
@@ -57,9 +70,18 @@ const RepoCard = ({ name, starCount, description, owner, menuItems }) => {
   return (
     <Card
       variant="outlined"
-      sx={{ width: 300, height: 400, position: "relative" }}
+      sx={{
+        width: {
+          xs: 300,
+          sm: "100%",
+        },
+        height: 450,
+        margin: "auto",
+        position: "relative",
+      }}
     >
       <Box>
+        <Styled.ProfileBackground />
         <Tooltip title="Card menu">
           <IconButton
             ref={anchorRef}
@@ -73,7 +95,6 @@ const RepoCard = ({ name, starCount, description, owner, menuItems }) => {
             <MoreVertIcon sx={{ color: "white" }} />
           </IconButton>
         </Tooltip>
-
         <Popper
           open={open}
           anchorEl={anchorRef.current}
@@ -83,12 +104,11 @@ const RepoCard = ({ name, starCount, description, owner, menuItems }) => {
           disablePortal
           sx={{ zIndex: 2 }}
         >
-          {({ TransitionProps, placement }) => (
+          {({ TransitionProps }) => (
             <Grow
               {...TransitionProps}
               style={{
-                transformOrigin:
-                  placement === "bottom-start" ? "left top" : "left bottom",
+                transformOrigin: "bottom-start",
               }}
             >
               <Paper>
@@ -106,13 +126,17 @@ const RepoCard = ({ name, starCount, description, owner, menuItems }) => {
                           onClick={menuPressAndClose(menuPress)}
                         >
                           {externalUrl ? (
-                            <StyledLink
+                            <Link
                               href={externalUrl}
                               target="_blank"
                               rel="noopener noreferrer"
+                              sx={{
+                                color: "black",
+                                textDecoration: "none",
+                              }}
                             >
                               {label}
-                            </StyledLink>
+                            </Link>
                           ) : (
                             label
                           )}
@@ -126,9 +150,6 @@ const RepoCard = ({ name, starCount, description, owner, menuItems }) => {
           )}
         </Popper>
       </Box>
-
-      <Box sx={{ bgcolor: blue[300], height: 100, width: "100%" }} />
-
       <CardContent>
         <Box
           sx={{
@@ -163,9 +184,34 @@ const RepoCard = ({ name, starCount, description, owner, menuItems }) => {
             </Typography>
           </Box>
         </Box>
+        <StatsInfo
+          borderTopColor={blue[100]}
+          forkCount={forkCount}
+          watcherCount={watcherCount}
+          starCount={starCount}
+        />
       </CardContent>
     </Card>
   );
+};
+
+RepoCard.propTypes = {
+  name: PropTypes.string.isRequired,
+  owner: PropTypes.shape({
+    login: PropTypes.string.isRequired,
+    avatar_url: PropTypes.string.isRequired,
+  }).isRequired,
+  description: PropTypes.string,
+  forkCount: PropTypes.number.isRequired,
+  starCount: PropTypes.number.isRequired,
+  watcherCount: PropTypes.number.isRequired,
+  url: PropTypes.string.isRequired,
+  menuItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      onClick: PropTypes.func.isRequired,
+    })
+  ).isRequired,
 };
 
 export default RepoCard;

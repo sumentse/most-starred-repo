@@ -28,7 +28,8 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "craco eject"
+    "eject": "craco eject",
+    "lint": "node_modules/.bin/eslint --ext js src"
   },
   "eslintConfig": {
     "extends": [

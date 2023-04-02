@@ -1,4 +1,4 @@
-var gitHubKeys = {
+const gitHubKeys = {
   all: ["github"],
   search: ()=> [...gitHubKeys.all, "search"],
   list: ()=> [...gitHubKeys.all, "list"],

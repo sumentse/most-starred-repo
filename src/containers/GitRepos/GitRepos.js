@@ -14,7 +14,7 @@ const GitRepos = () => {
 
   const buildCards = () => {
     return repoData.items.map(
-      ({ id, name, owner, html_url, description, stargazers_count }) => {
+      ({ id, name, owner, html_url, description, forks, watchers, stargazers_count }) => {
         const menuItems = [
           {
             label: "Open Git Repo",
@@ -26,12 +26,14 @@ const GitRepos = () => {
           },
         ];
         return (
-          <Grid item xs={12} md={4} key={id}>
+          <Grid item xs={12} sm={6} md={4} lg={3} key={id}>
             <RepoCard
               name={name}
               owner={owner}
               description={description}
+              forkCount={forks}
               starCount={stargazers_count}
+              watcherCount={watchers}
               url={html_url}
               menuItems={menuItems}
             />

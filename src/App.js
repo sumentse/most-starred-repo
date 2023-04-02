@@ -6,7 +6,7 @@ const LoadingScreen = lazy(() => import("@components/LoadingScreen"));
 
 const App = () => {
   return (
-    <Container>
+    <Container maxWidth="xl">
       <Suspense fallback={<LoadingScreen />}>
         <Routes>
           <Route exact path="/" element={<GitRepos />} />
