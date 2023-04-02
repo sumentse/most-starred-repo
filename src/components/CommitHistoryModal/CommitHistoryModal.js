@@ -93,14 +93,16 @@ const CommitHistoryModal = ({ open, closeModal, commits = [], isLoading }) => {
             <CircularProgress />
           </Box>
         )}
-        {commits.length > 0 && !isLoading && (
+        {!isLoading && (
           <>
             <Typography variant="body1">
               Total commits: {commits.length}
             </Typography>
-            <Box sx={{ overflowY: "auto", height: "inherit" }}>
-              <Timeline>{buildCommitTimeline()}</Timeline>
-            </Box>
+            {commits.length > 0 && (
+              <Box sx={{ overflowY: "auto", height: "inherit" }}>
+                <Timeline>{buildCommitTimeline()}</Timeline>
+              </Box>
+            )}
           </>
         )}
       </Styled.Container>
