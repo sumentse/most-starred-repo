@@ -1,7 +1,6 @@
 import { Grid } from "@mui/material";
 import moment from "moment";
 import useQuerySearchRepos from "@hooks/queries/useQuerySearchRepos";
-import useQueryListCommits from "@hooks/queries/useQueryListCommits";
 import RepoCard from "@components/RepoCard";
 
 const GitRepos = () => {
