@@ -172,12 +172,24 @@ const RepoCard = ({
           />
         </Box>
         <Box sx={{ mt: 10 }}>
-          <Typography
-            variant="h5"
-            sx={{ textAlign: "center", fontWeight: "bold" }}
+          <Box
+            sx={{
+              overflow: "hidden",
+              whiteSpace: "nowrap",
+              textOverflow: "ellipsis",
+              textAlign: "center"
+            }}
           >
-            {name}
-          </Typography>
+            <Typography
+              variant="h5"
+              noWrap
+              sx={{
+                fontWeight: "bold",
+              }}
+            >
+              {name}
+            </Typography>
+          </Box>
           <Box sx={{ overflowY: "auto", height: 100 }}>
             <Typography sx={{ mt: 1 }} variant="body2">
               {description}
@@ -209,7 +221,8 @@ RepoCard.propTypes = {
   menuItems: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
-      onClick: PropTypes.func.isRequired,
+      externalUrl: PropTypes.string,
+      onClick: PropTypes.func,
     })
   ).isRequired,
 };

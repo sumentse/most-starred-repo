@@ -1,5 +1,6 @@
 import { cloneElement } from "react";
 
+// combine providers to make it easier to read
 const CombineProviders = ({providers, children}) => {
   const renderProvider = (providers, children) => {
     const [provider, ...restProviders] = providers;

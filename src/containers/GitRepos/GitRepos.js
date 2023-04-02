@@ -1,28 +1,57 @@
-import { Grid } from "@mui/material";
+import { useState } from "react";
+import { Grid, Typography, Box } from "@mui/material";
 import moment from "moment";
 import useQuerySearchRepos from "@hooks/queries/useQuerySearchRepos";
+import useQueryListCommits from "@hooks/queries/useQueryListCommits";
 import RepoCard from "@components/RepoCard";
+import CommitHistoryModal from "@components/CommitHistoryModal";
+import useModal from "@hooks/useModal";
 
 const GitRepos = () => {
+  const [selectedRepo, setSelectedRepo] = useState(null);
+  const { isOpen, openModal, closeModal } = useModal();
+
   const twentyFourHoursAgo = moment()
     .startOf("hour")
     .subtract(24, "hours")
     .toISOString();
-  const { data: repoData, isLoading } = useQuerySearchRepos({
-    query: `q=stars:>1 pushed:>=${twentyFourHoursAgo}&sort=stars&order=desc&per_page=10`,
-  });
+
+  const { data: repoData, isLoading: isSearchRepoLoading } =
+    useQuerySearchRepos({
+      query: `q=stars:>1 pushed:>=${twentyFourHoursAgo}&sort=stars&order=desc&per_page=100`,
+    });
+  const { data: commitsData, isLoading: isListCommitsLoading } =
+    useQueryListCommits({ ...selectedRepo, twentyFourHoursAgo });
+
+  const viewCommits = ({ owner, repo }) => {
+    setSelectedRepo({ owner, repo });
+    openModal();
+  };
 
   const buildCards = () => {
     return repoData.items.map(
-      ({ id, name, owner, html_url, description, forks, watchers, stargazers_count }) => {
+      ({
+        id,
+        name,
+        owner,
+        html_url,
+        description,
+        forks,
+        watchers,
+        stargazers_count,
+      }) => {
         const menuItems = [
           {
             label: "Open Git Repo",
-            externalUrl: html_url
+            externalUrl: html_url,
           },
           {
             label: "View Commits",
-            menuPress: () => console.log("open modal"),
+            menuPress: () =>
+              viewCommits({
+                owner: owner.login,
+                repo: name,
+              }),
           },
         ];
         return (
@@ -43,12 +72,23 @@ const GitRepos = () => {
     );
   };
 
-  if (isLoading) return null;
+  if (isSearchRepoLoading) return null;
 
   return (
-    <Grid container spacing={3} sx={{ my: 10 }}>
-      {buildCards()}
-    </Grid>
+    <Box sx={{ my: 10 }}>
+      <Typography variant="h4" component="h1">
+        Top 100 Star Repositories
+      </Typography>
+      <Grid container spacing={3} sx={{ mt: 1 }}>
+        {buildCards()}
+        <CommitHistoryModal
+          open={isOpen}
+          closeModal={closeModal}
+          commits={commitsData || []}
+          isLoading={isListCommitsLoading}
+        />
+      </Grid>
+    </Box>
   );
 };
 
