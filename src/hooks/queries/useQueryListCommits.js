@@ -3,16 +3,17 @@ import Github from "@services/api/github";
 import gitHubQueryKeys from "./queryKeys";
 
 const listCommits = (params) => async () => {
-  
   const response = await Github.listCommits(params);
   return response.data;
 };
 
-const useQueryListCommits = ({ query = "" }) =>
-  useQuery({
-    queryKey: gitHubQueryKeys.commits(query),
-    queryFn: listCommits(query),
-    enabled: !!query,
+const useQueryListCommits = (params) => {
+  const { owner, repo } = params;
+  return useQuery({
+    queryKey: gitHubQueryKeys.listCommits(params),
+    queryFn: listCommits(params),
+    enabled: Boolean(owner && repo),
   });
+};
 
 export default useQueryListCommits;
