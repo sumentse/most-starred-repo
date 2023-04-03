@@ -6,6 +6,7 @@ import useQueryListCommits from "@hooks/queries/useQueryListCommits";
 import RepoCard from "@components/RepoCard";
 import CommitHistoryModal from "@components/CommitHistoryModal";
 import useModal from "@hooks/useModal";
+import LoadingScreen from "@components/LoadingScreen";
 
 const GitRepos = () => {
   const [selectedRepo, setSelectedRepo] = useState(null);
@@ -72,7 +73,7 @@ const GitRepos = () => {
     );
   };
 
-  if (isSearchRepoLoading) return null;
+  if (isSearchRepoLoading) return <LoadingScreen />;
 
   return (
     <Box sx={{ my: 10 }}>

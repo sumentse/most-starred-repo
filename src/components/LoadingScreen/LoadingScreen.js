@@ -1,20 +1,17 @@
-import { CircularProgress, Grid } from "@mui/material";
+import { CircularProgress, Box } from "@mui/material";
 
 const LoadingScreen = () => {
   return (
-    <Grid
-      container
-      spacing={0}
-      direction="column"
-      alignItems="center"
-      justify="center"
-      style={{ minHeight: "100vh" }}
-      data-testid="loading-screen"
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+      }}
     >
-      <Grid item xs={3}>
-        <CircularProgress data-testid="spinner" />
-      </Grid>
-    </Grid>
+      <CircularProgress data-testid="loading-screen" />
+    </Box>
   );
 };
 
