@@ -33,6 +33,7 @@ const Styled = {
 };
 
 const StatsInfo = ({
+  repoName,
   borderTopColor = grey[300],
   forkCount = 0,
   watcherCount = 0,
@@ -40,6 +41,7 @@ const StatsInfo = ({
 }) => {
   return (
     <Paper
+      data-testid={`${repoName}-stats-info`}
       elevation={2}
       sx={{ mt: 2, p: 2, borderTop: `solid 2px ${borderTopColor}` }}
     >
@@ -51,15 +53,15 @@ const StatsInfo = ({
             alignItems: "center",
           }}
         >
-          <Styled.Counter>{forkCount}</Styled.Counter>
-          <Styled.Label>Forks</Styled.Label>
+          <Styled.Counter data-testid={`${repoName}-fork-count`}>{forkCount}</Styled.Counter>
+          <Styled.Label >Forks</Styled.Label>
         </Styled.Stats>
         <Styled.Stats>
-          <Styled.Counter>{watcherCount}</Styled.Counter>
+          <Styled.Counter data-testid={`${repoName}-watcher-count`}>{watcherCount}</Styled.Counter>
           <Styled.Label>Watchers</Styled.Label>
         </Styled.Stats>
         <Styled.Stats>
-          <Styled.Counter>{starCount}</Styled.Counter>
+          <Styled.Counter data-testid={`${repoName}-star-count`}>{starCount}</Styled.Counter>
           <Styled.Label>Stars</Styled.Label>
         </Styled.Stats>
       </Styled.StatsContainer>
@@ -68,6 +70,7 @@ const StatsInfo = ({
 };
 
 StatsInfo.propTypes = {
+  repoName: PropTypes.string.isRequired,
   borderTopColor: PropTypes.string,
   forkCount: PropTypes.number,
   watcherCount: PropTypes.number,

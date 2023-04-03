@@ -177,7 +177,7 @@ const RepoCard = ({
               overflow: "hidden",
               whiteSpace: "nowrap",
               textOverflow: "ellipsis",
-              textAlign: "center"
+              textAlign: "center",
             }}
           >
             <Typography
@@ -197,6 +197,7 @@ const RepoCard = ({
           </Box>
         </Box>
         <StatsInfo
+          repoName={name}
           borderTopColor={blue[100]}
           forkCount={forkCount}
           watcherCount={watcherCount}

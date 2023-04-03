@@ -19,6 +19,14 @@ describe("CommitHistoryModal", () => {
     expect(screen.getByText(/total commits: 0/i)).toBeInTheDocument();
   });
 
+  it("renders no modal", () => {
+    props.open = false;
+    render(<CommitHistoryModal {...props} />);
+    expect(
+      screen.getByRole("presentation", { hidden: true })
+    ).toBeInTheDocument();
+  });
+
   it("click on close modal", () => {
     render(<CommitHistoryModal {...props} />);
     const closeButton = screen.getByTestId("CancelIcon");
@@ -43,14 +51,14 @@ describe("CommitHistoryModal", () => {
       },
     ];
     render(<CommitHistoryModal {...props} />);
-    expect(screen.getByText('1/1/21 12:00 AM')).toBeInTheDocument();
+    expect(screen.getByText("1/1/21 12:00 AM")).toBeInTheDocument();
     expect(screen.getByText(/john/i)).toBeInTheDocument();
     expect(screen.getByText(/example commit/i)).toBeInTheDocument();
   });
 
-  it('renders with loading spinner', ()=>{
+  it("renders with loading spinner", () => {
     props.isLoading = true;
     render(<CommitHistoryModal {...props} />);
-    expect(screen.getByRole('progressbar')).toBeInTheDocument();
-  })
+    expect(screen.getByRole("progressbar")).toBeInTheDocument();
+  });
 });
