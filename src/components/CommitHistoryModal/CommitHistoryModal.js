@@ -14,6 +14,7 @@ import {
   TimelineContent,
   TimelineDot,
   TimelineOppositeContent,
+  timelineOppositeContentClasses,
 } from "@mui/lab";
 import { styled } from "@mui/material/styles";
 import LaptopMacIcon from "@mui/icons-material/LaptopMac";
@@ -100,7 +101,15 @@ const CommitHistoryModal = ({ open, closeModal, commits = [], isLoading }) => {
             </Typography>
             {commits.length > 0 && (
               <Box sx={{ overflowY: "auto", height: "inherit" }}>
-                <Timeline>{buildCommitTimeline()}</Timeline>
+                <Timeline
+                  sx={{
+                    [`& .${timelineOppositeContentClasses.root}`]: {
+                      flex: 0.2,
+                    },
+                  }}
+                >
+                  {buildCommitTimeline()}
+                </Timeline>
               </Box>
             )}
           </>
